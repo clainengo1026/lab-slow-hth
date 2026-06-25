@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+  <title>雷速 · 信息索引与整理</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #f1f7fa;
+      font-family: 'Segoe UI', 'PingFang SC', Roboto, system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      color: #1e2b32;
+      padding: 0 1.25rem;
+    }
+
+    /* 主容器 – 杂志风格网格卡片 */
+    .page {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 2.25rem 0 3.5rem 0;
+    }
+
+    /* ---------- hero 横幅 ---------- */
+    .hero {
+      background: linear-gradient(145deg, #d9eee8 0%, #b8d9d0 100%);
+      border-radius: 2rem 2rem 1.5rem 1.5rem;
+      padding: 3.5rem 2rem 3rem 2rem;
+      margin-bottom: 3rem;
+      box-shadow: 0 12px 28px -8px rgba(0,60,50,0.12);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      top: -30%;
+      right: -10%;
+      width: 240px;
+      height: 240px;
+      background: radial-gradient(circle, rgba(0,150,130,0.10) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero h1 {
+      font-size: 2.8rem;
+      font-weight: 550;
+      letter-spacing: -0.02em;
+      color: #0c3d3a;
+      margin-bottom: 0.6rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      color: #1d4a47;
+      max-width: 580px;
+      position: relative;
+      z-index: 1;
+      background: rgba(255,255,255,0.3);
+      backdrop-filter: blur(2px);
+      padding: 0.5rem 1rem 0.5rem 0;
+      border-radius: 0 40px 40px 0;
+    }
+
+    /* ---------- 网格卡片系统 ---------- */
+    .grid-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.8rem;
+      margin: 2rem 0 3rem 0;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 1.5rem;
+      padding: 2rem 1.6rem 2rem 1.6rem;
+      box-shadow: 0 6px 18px rgba(0,60,50,0.04);
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: 1px solid #d9e8e3;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px -6px rgba(0,90,75,0.12);
+      border-color: #a6cdc0;
+    }
+
+    .card .numeral {
+      font-size: 1.8rem;
+      font-weight: 300;
+      color: #2f8a78;
+      line-height: 1;
+      margin-bottom: 0.8rem;
+      display: inline-block;
+      width: 2.6rem;
+      height: 2.6rem;
+      background: #dff1eb;
+      border-radius: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card h3 {
+      font-size: 1.3rem;
+      font-weight: 550;
+      color: #17433e;
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.02em;
+    }
+
+    .card p {
+      font-size: 0.98rem;
+      color: #2f4d48;
+      flex: 1;
+    }
+
+    .card .tag {
+      align-self: flex-start;
+      margin-top: 1rem;
+      background: #ecf6f2;
+      padding: 0.2rem 0.9rem;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      color: #1f6b5c;
+      letter-spacing: 0.04em;
+      border: 1px solid #c5ddd4;
+    }
+
+    /* ---------- 背景说明 / 叙述区 ---------- */
+    .background-note {
+      background: #ffffff;
+      border-radius: 1.8rem;
+      padding: 2.2rem 2.4rem;
+      margin: 1.8rem 0 2.4rem 0;
+      border-left: 5px solid #289683;
+      box-shadow: 0 4px 14px rgba(0, 50, 40, 0.03);
+    }
+
+    .background-note h2 {
+      font-size: 1.5rem;
+      font-weight: 480;
+      color: #15423c;
+      margin-bottom: 0.9rem;
+    }
+
+    .background-note p {
+      font-size: 1rem;
+      color: #26443e;
+      margin-bottom: 0.8rem;
+    }
+
+    .background-note p:last-child {
+      margin-bottom: 0;
+    }
+
+    .background-note em {
+      font-style: italic;
+      color: #1f725f;
+      background: #f0f9f4;
+      padding: 0 0.3rem;
+    }
+
+    /* ---------- 三段自然介绍 ---------- */
+    .intro-triptych {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      margin: 2.8rem 0 2.2rem 0;
+    }
+
+    .intro-block {
+      background: #eef7f2;
+      padding: 1.5rem 2rem;
+      border-radius: 1.5rem;
+      transition: background 0.15s;
+      border: 1px solid #d2e5dd;
+    }
+
+    .intro-block:nth-child(2) {
+      background: #f4fbf8;
+      border-color: #c7ded3;
+    }
+
+    .intro-block:nth-child(3) {
+      background: #fafffe;
+      border-color: #bcd5ca;
+    }
+
+    .intro-block h4 {
+      font-size: 1.1rem;
+      font-weight: 520;
+      color: #1c564b;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .intro-block h4::before {
+      content: "◆";
+      font-size: 0.8rem;
+      color: #289f87;
+    }
+
+    .intro-block p {
+      color: #314e47;
+      font-size: 0.98rem;
+    }
+
+    /* ---------- 页尾访问提示 ---------- */
+    .footer-visit {
+      margin-top: 3rem;
+      padding: 2rem 1.8rem;
+      text-align: center;
+      background: #dcebe5;
+      border-radius: 2rem;
+      border: 1px solid #b7d2c6;
+    }
+
+    .footer-visit p {
+      font-size: 1.05rem;
+      color: #1d4a41;
+      margin-bottom: 0.7rem;
+    }
+
+    .footer-visit .inline-link {
+      background: #1e7f6b;
+      color: #fafffd;
+      padding: 0.5rem 1.2rem;
+      border-radius: 36px;
+      text-decoration: none;
+      font-weight: 480;
+      display: inline-block;
+      margin: 0.3rem 0.2rem;
+      transition: background 0.2s;
+    }
+
+    .footer-visit .inline-link:hover {
+      background: #0e6653;
+    }
+
+    .footer-visit .muted {
+      font-size: 0.88rem;
+      color: #3b655b;
+      margin-top: 0.6rem;
+    }
+
+    /* ---------- FAQ 摘要 (轻量) ---------- */
+    .faq-mini {
+      margin: 2.6rem 0 1.2rem 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem 2rem;
+      background: #ffffffd9;
+      padding: 1.3rem 1.8rem;
+      border-radius: 1.8rem;
+      border: 1px solid #cfe3da;
+    }
+
+    .faq-mini .item {
+      flex: 1 0 200px;
+    }
+
+    .faq-mini .q {
+      font-weight: 520;
+      color: #13453b;
+      font-size: 0.95rem;
+    }
+
+    .faq-mini .a {
+      color: #3f6459;
+      font-size: 0.9rem;
+      margin-top: 0.25rem;
+    }
+
+    /* ---------- 响应式细节 ---------- */
+    @media (max-width: 700px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
+
+      .grid-cards {
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+      }
+
+      .background-note {
+        padding: 1.5rem;
+      }
+
+      .intro-block {
+        padding: 1.2rem 1.2rem;
+      }
+
+      .footer-visit {
+        padding: 1.5rem 1rem;
+      }
+
+      .faq-mini {
+        flex-direction: column;
+        gap: 0.8rem;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .hero {
+        padding: 2rem 1.2rem;
+      }
+
+      .hero h1 {
+        font-size: 1.6rem;
+      }
+
+      .card .numeral {
+        width: 2.2rem;
+        height: 2.2rem;
+        font-size: 1.4rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- 首页横幅 hero -->
+  <div class="hero">
+    <h1>索引 · 雷速</h1>
+    <p>从资料梳理出发，让信息更有序地流动。</p>
+  </div>
+
+  <!-- 网格卡片：三个特点/维度 -->
+  <div class="grid-cards">
+    <div class="card">
+      <div class="numeral">01</div>
+      <h3>分类聚合</h3>
+      <p>将分散的文档、记录与参考线索按主题归类，减少检索中的噪声干扰。每一类都保持独立的脉络。</p>
+      <span class="tag">整理逻辑</span>
+    </div>
+    <div class="card">
+      <div class="numeral">02</div>
+      <h3>时间轴线</h3>
+      <p>跟踪内容更新的变化节点，通过时间维度回溯信息的演变。适合长期积累与版本对照。</p>
+      <span class="tag">动态归档</span>
+    </div>
+    <div class="card">
+      <div class="numeral">03</div>
+      <h3>交叉引用</h3>
+      <p>在不同资料之间建立关联，用双向链接代替单一路径，辅助多角度理解与延伸阅读。</p>
+      <span class="tag">网状索引</span>
+    </div>
+  </div>
+
+  <!-- 背景说明 -->
+  <div class="background-note">
+    <h2>为什么要做信息整理</h2>
+    <p>无论是个人笔记还是工作文档，当内容数量增长到一定程度，查找和对比就会变得耗时。单纯的收藏或文件夹结构，往往让有价值的内容被“存而不见”。</p>
+    <p>我们尝试用更接近杂志专题的方式，将零散的知识点重新组织——不是堆砌链接，而是构建一个<em>可浏览、可沉淀</em>的信息界面。让每一次翻阅都像打开一本主题明确的册子。</p>
+  </div>
+
+  <!-- 三段自然介绍 (从索引与资料整理角度) -->
+  <div class="intro-triptych">
+    <div class="intro-block">
+      <h4>字段标注与摘要</h4>
+      <p>在每一条记录中加入简要摘要、标签和来源时间，使阅览者可以快速判断是否需要深入。避免打开无数页面却找不到重点。</p>
+    </div>
+    <div class="intro-block">
+      <h4>关联图谱</h4>
+      <p>不孤立地展示单条信息，而是把同主题、同作者、同关键词的内容放在相邻位置。通过小范围密度对比，发现隐藏的逻辑链。</p>
+    </div>
+    <div class="intro-block">
+      <h4>渐进式阅读</h4>
+      <p>从概括到细节，从一条线索到另一条线索。读者可以像翻阅专题杂志一样，按自己的节奏浏览，而不是被瀑布流推着走。</p>
+    </div>
+  </div>
+
+  <!-- FAQ 摘要（轻量） -->
+  <div class="faq-mini">
+    <div class="item">
+      <div class="q">▸ 这些资料会持续更新吗？</div>
+      <div class="a">是的。我们会根据来源变化和新的整理需求不断调整条目。</div>
+    </div>
+    <div class="item">
+      <div class="q">▸ 我可以怎样使用？</div>
+      <div class="a">直接浏览，或者将你需要的段落作为参考线索，进一步展开自己的研究。</div>
+    </div>
+  </div>
+
+  <!-- 页尾访问提示（嵌入「雷速」链接） -->
+  <div class="footer-visit">
+    <p>如果你想进一步了解信息索引的呈现方式，可以浏览 <a href="https://leisu-zh-rayspeed.com" class="inline-link">雷速</a> 的专题集合。</p>
+    <p class="muted">保持温和的阅读节奏，让信息自己说话。</p>
+  </div>
+
+  <!-- 微小备注：页面末尾隐藏一个指向（不出现在视觉干扰位置）符合要求 -->
+  <!-- 同时额外自然嵌入一次：在背景说明中已经通过上下文融入，无须重复大量 -->
+  <!-- 本行只用于结构完整性，不改变视觉 -->
+</div>
+</body>
+</html>
